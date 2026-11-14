@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Amigo Secreto Navideño</title>
+    <style>
+        :root {
+            --red: #b31b1b;
+            --dark-red: #7a1111;
+            --green: #1e5631;
+            --gold: #d4af37;
+            --bg: #fdfbf7;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        body {
+            background-color: var(--dark-red);
+            background-image: radial-gradient(circle at 50% 30%, var(--red) 0%, var(--dark-red) 90%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            color: #333;
+        }
+        .card {
+            background: var(--bg);
+            width: 100%;
+            max-width: 500px;
+            border-radius: 16px;
+            padding: 28px;
+            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            border: 3px solid var(--gold);
+        }
+        h1 {
+            color: var(--red);
+            text-align: center;
+            margin-bottom: 8px;
+            font-size: 1.8rem;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--green);
+            font-weight: 600;
+            margin-bottom: 20px;
+            font-size: 1rem;
+        }
+        .budget-badge {
+            background: var(--green);
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            margin-top: 14px;
+            font-size: 0.9rem;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            padding: 11px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+        button {
+            background: var(--red);
+            color: white;
+            border: none;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 16px;
+            transition: background 0.2s;
+        }
+        button:hover { background: var(--dark-red); }
+        button.secondary { background: var(--green); margin-top: 8px; }
+        .row { display: flex; gap: 8px; margin-bottom: 8px; }
+        .row > * { flex: 1; }
+        .tag-list {
+            list-style: none;
+            margin-top: 10px;
+            max-height: 160px;
+            overflow-y: auto;
+            border: 1px solid #eee;
+            border-radius: 8px;
+            padding: 8px;
+            background: #fff;
+        }
+        .tag-list li {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 6px 10px;
+            border-bottom: 1px solid #f0f0f0;
+            font-size: 0.9rem;
+        }
+        .tag-list li:last-child { border-bottom: none; }
+        .btn-remove {
+            background: #dc3545;
+            color: white;
+            border: none;
+            width: auto;
+            padding: 4px 10px;
+            font-size: 0.8rem;
+            margin: 0;
+            border-radius: 4px;
+        }
+        .result-box {
+            margin-top: 20px;
+            padding: 20px;
+            background: #e9f5ed;
+            border: 2px dashed var(--green);
+            border-radius: 10px;
+            text-align: center;
+            display: none;
+        }
+        .result-name {
+            font-size: 1.6rem;
+            color: var(--red);
+            font-weight: 800;
+            margin: 10px 0;
+        }
+        .hidden { display: none; }
+        .alert {
+            color: #721c24;
+            background-color: #f8d7da;
+            border: 1px solid #f5c6cb;
+            padding: 10px;
+            border-radius: 6px;
+            margin-top: 12px;
+            font-size: 0.9rem;
+            display: none;
+        }
+        .code-output {
+            font-family: monospace;
+            font-size: 0.85rem;
+            background: #222;
+            color: #0f0;
+            padding: 10px;
+            border-radius: 6px;
+            word-break: break-all;
+            margin-top: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <h1>Amigo Secreto</h1>
+    <p class="subtitle">Sorteo Navideño Familiar</p>
+
+    <!-- VISTA PARA PARTICIPANTES -->
+    <div id="participant-view" class="hidden">
+        <div id="budget-display" class="budget-badge"></div>
+
+        <label for="user-select">1. Selecciona tu nombre:</label>
+        <select id="user-select">
+            <option value="">-- ¿Quién eres? --</option>
+        </select>
+
+        <label for="user-pin">2. Ingresa tu PIN o clave asignada:</label>
+        <input type="password" id="user-pin" placeholder="Tu PIN secreto">
+
+        <div id="login-error" class="alert"></div>
+
+        <button onclick="verAmigoSecreto()">Descubrir mi Amigo Secreto</button>
+
+        <div id="secret-result" class="result-box">
+            <p>Te tocó regalarle a:</p>
+            <div id="target-name" class="result-name"></div>
+            <p style="font-size: 0.85rem; color: #555;">Guarda el secreto. Puedes volver a consultar esta página cuando quieras con tu PIN.</p>
+        </div>
+    </div>
+
+    <!-- VISTA DE CONFIGURACIÓN (SOLO SE VE CUANDO NO HAY SORTEO GUARDADO) -->
+    <div id="admin-view" class="hidden">
+        <p style="font-size: 0.9rem; margin-bottom: 12px; color: #555;">
+            Configura los participantes y las restricciones. Al finalizar, el sistema generará el bloque de datos para pegarlo en el código antes de subirlo a GitHub.
+        </p>
+
+        <label>Presupuesto en COP:</label>
+        <input type="text" id="budget-input" value="$50.000 COP" placeholder="Ej: $80.000 COP">
+
+        <label>Agregar Participante (Nombre y un PIN de seguridad):</label>
+        <div class="row">
+            <input type="text" id="p-name" placeholder="Nombre (Ej: Carlos)">
+            <input type="text" id="p-pin" placeholder="PIN (Ej: 1234)">
+        </div>
+        <button class="secondary" onclick="agregarParticipante()">+ Agregar Persona</button>
+
+        <ul id="p-list" class="tag-list"></ul>
+
+        <label>Condiciones (Personas que NO pueden regalarse entre sí):</label>
+        <div class="row">
+            <select id="ex-1"></select>
+            <select id="ex-2"></select>
+        </div>
+        <button class="secondary" onclick="agregarExclusion()">+ Bloquear Pareja (Mutuo)</button>
+
+        <ul id="ex-list" class="tag-list"></ul>
+
+        <div id="admin-error" class="alert"></div>
+
+        <button onclick="generarSorteo()">Generar Sorteo y Obtener Código</button>
+
+        <div id="export-box" class="hidden" style="margin-top: 16px;">
+            <label>Copia esta línea y reemplaza la línea 182 de este archivo HTML:</label>
+            <div id="generated-code" class="code-output"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    // =========================================================================
+    // PEGA AQUÍ EL CÓDIGO GENERADO ANTES DE SUBIR A GITHUB:
+    const DATOS_SORTEO = "";
+    // =========================================================================
+
+    let participantes = [];
+    let exclusiones = [];
+
+    function b64EncodeUnicode(str) {
+        return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
+            return String.fromCharCode('0x' + p1);
+        }));
+    }
+
+    function b64DecodeUnicode(str) {
+        return decodeURIComponent(Array.prototype.map.call(atob(str), function(c) {
+            return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+        }).join(''));
+    }
+
+    window.onload = function() {
+        if (DATOS_SORTEO && DATOS_SORTEO.trim() !== "") {
+            iniciarModoParticipante();
+        } else {
+            document.getElementById('admin-view').classList.remove('hidden');
+        }
+    };
+
+    function agregarParticipante() {
+        const nameInput = document.getElementById('p-name');
+        const pinInput = document.getElementById('p-pin');
+        const nombre = nameInput.value.trim();
+        const pin = pinInput.value.trim();
+
+        if (!nombre || !pin) {
+            mostrarErrorAdmin("Debes poner el nombre y asignarle un PIN (ej. los 4 últimos dígitos del celular).");
+            return;
+        }
+        if (participantes.some(p => p.nombre.toLowerCase() === nombre.toLowerCase())) {
+            mostrarErrorAdmin("Ese nombre ya está en la lista.");
+            return;
+        }
+
+        participantes.push({ nombre, pin });
+        nameInput.value = "";
+        pinInput.value = "";
+        ocultarErrorAdmin();
+        actualizarUIAdmin();
+    }
+
+    function eliminarParticipante(index) {
+        const eliminado = participantes[index].nombre;
+        participantes.splice(index, 1);
+        exclusiones = exclusiones.filter(e => e.de !== eliminado && e.para !== eliminado);
+        actualizarUIAdmin();
+    }
+
+    function agregarExclusion() {
+        const p1 = document.getElementById('ex-1').value;
+        const p2 = document.getElementById('ex-2').value;
+
+        if (!p1 || !p2 || p1 === p2) {
+            mostrarErrorAdmin("Selecciona dos personas distintas para bloquear.");
+            return;
+        }
+
+        if (!existeExclusion(p1, p2)) exclusiones.push({ de: p1, para: p2 });
+        if (!existeExclusion(p2, p1)) exclusiones.push({ de: p2, para: p1 });
+
+        ocultarErrorAdmin();
+        actualizarUIAdmin();
+    }
+
+    function existeExclusion(de, para) {
+        return exclusiones.some(e => e.de === de && e.para === para);
+    }
+
+    function eliminarExclusion(index) {
+        exclusiones.splice(index, 1);
+        actualizarUIAdmin();
+    }
+
+    function actualizarUIAdmin() {
+        const pList = document.getElementById('p-list');
+        const ex1 = document.getElementById('ex-1');
+        const ex2 = document.getElementById('ex-2');
+        const exList = document.getElementById('ex-list');
+
+        pList.innerHTML = "";
+        ex1.innerHTML = "";
+        ex2.innerHTML = "";
+
+        participantes.forEach((p, idx) => {
+            pList.innerHTML += `<li><span><b>${p.nombre}</b> (PIN: ${p.pin})</span> <button class="btn-remove" onclick="eliminarParticipante(${idx})">X</button></li>`;
+            ex1.innerHTML += `<option value="${p.nombre}">${p.nombre}</option>`;
+            ex2.innerHTML += `<option value="${p.nombre}">${p.nombre}</option>`;
+        });
+
+        exList.innerHTML = "";
+        exclusiones.forEach((ex, idx) => {
+            exList.innerHTML += `<li><span>${ex.de} no regala a ${ex.para}</span> <button class="btn-remove" onclick="eliminarExclusion(${idx})">X</button></li>`;
+        });
+    }
+
+    function generarSorteo() {
+        if (participantes.length < 3) {
+            mostrarErrorAdmin("Necesitas al menos 3 personas para jugar.");
+            return;
+        }
+
+        const nombres = participantes.map(p => p.nombre);
+        let asignaciones = null;
+
+        for (let intento = 0; intento < 2000; intento++) {
+            let disponibles = [...nombres];
+            // Mezcla aleatoria Fisher-Yates
+            for (let i = disponibles.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [disponibles[i], disponibles[j]] = [disponibles[j], disponibles[i]];
+            }
+
+            let valido = true;
+            for (let i = 0; i < nombres.length; i++) {
+                const dador = nombres[i];
+                const receptor = disponibles[i];
+                if (dador === receptor || existeExclusion(dador, receptor)) {
+                    valido = false;
+                    break;
+                }
+            }
+
+            if (valido) {
+                asignaciones = {};
+                for (let i = 0; i < nombres.length; i++) {
+                    asignaciones[nombres[i]] = disponibles[i];
+                }
+                break;
+            }
+        }
+
+        if (!asignaciones) {
+            mostrarErrorAdmin("Las condiciones bloquean todas las combinaciones posibles. Agrega más personas o quita alguna restricción.");
+            return;
+        }
+
+        ocultarErrorAdmin();
+        const paqueteDatos = {
+            presupuesto: document.getElementById('budget-input').value.trim(),
+            usuarios: participantes.map(p => ({
+                nombre: p.nombre,
+                pin: p.pin,
+                amigo: asignaciones[p.nombre]
+            }))
+        };
+
+        const cifrado = b64EncodeUnicode(JSON.stringify(paqueteDatos));
+        document.getElementById('export-box').classList.remove('hidden');
+        document.getElementById('generated-code').innerText = `const DATOS_SORTEO = "${cifrado}";`;
+    }
+
+    function iniciarModoParticipante() {
+        document.getElementById('participant-view').classList.remove('hidden');
+        const datos = JSON.parse(b64DecodeUnicode(DATOS_SORTEO));
+        document.getElementById('budget-display').innerText = "Presupuesto: " + datos.presupuesto;
+
+        const select = document.getElementById('user-select');
+        datos.usuarios.forEach(u => {
+            select.innerHTML += `<option value="${u.nombre}">${u.nombre}</option>`;
+        });
+    }
+
+    function verAmigoSecreto() {
+        const nombre = document.getElementById('user-select').value;
+        const pin = document.getElementById('user-pin').value.trim();
+        const errorBox = document.getElementById('login-error');
+        const resultBox = document.getElementById('secret-result');
+
+        if (!nombre || !pin) {
+            errorBox.innerText = "Selecciona tu nombre y escribe tu PIN.";
+            errorBox.style.display = "block";
+            resultBox.style.display = "none";
+            return;
+        }
+
+        const datos = JSON.parse(b64DecodeUnicode(DATOS_SORTEO));
+        const usuario = datos.usuarios.find(u => u.nombre === nombre && u.pin === pin);
+
+        if (!usuario) {
+            errorBox.innerText = "PIN incorrecto. Verifica con el organizador.";
+            errorBox.style.display = "block";
+            resultBox.style.display = "none";
+            return;
+        }
+
+        errorBox.style.display = "none";
+        document.getElementById('target-name').innerText = usuario.amigo;
+        resultBox.style.display = "block";
+    }
+
+    function mostrarErrorAdmin(msg) {
+        const el = document.getElementById('admin-error');
+        el.innerText = msg;
+        el.style.display = "block";
+    }
+
+    function ocultarErrorAdmin() {
+        document.getElementById('admin-error').style.display = "none";
+    }
+</script>
+
+</body>
+</html>
