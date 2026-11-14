@@ -6,155 +6,386 @@
     <title>Amigo Secreto Navideño</title>
     <style>
         :root {
-            --red: #b31b1b;
-            --dark-red: #7a1111;
-            --green: #1e5631;
-            --gold: #d4af37;
-            --bg: #fdfbf7;
+            --night-top: #07111e;
+            --night-bottom: #152b44;
+            --red: #c92a2a;
+            --dark-red: #8a1616;
+            --green: #1b5e20;
+            --light-green: #2e7d32;
+            --gold: #f5b041;
+            --snow: #ffffff;
+            --card-bg: rgba(255, 252, 247, 0.96);
         }
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
         body {
-            background-color: var(--dark-red);
-            background-image: radial-gradient(circle at 50% 30%, var(--red) 0%, var(--dark-red) 90%);
+            background: linear-gradient(180deg, var(--night-top) 0%, var(--night-bottom) 85%, #e8f1f5 100%);
             min-height: 100vh;
             display: flex;
+            flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
-            color: #333;
+            padding: 45px 16px 30px 16px;
+            position: relative;
+            overflow-x: hidden;
+            color: #2c3e50;
         }
+
+        /* LUCES NAVIDEÑAS SUPERIORES EN CSS */
+        .light-rope {
+            position: fixed;
+            top: -10px;
+            left: 0;
+            width: 100%;
+            height: 36px;
+            display: flex;
+            justify-content: space-around;
+            z-index: 10;
+            pointer-events: none;
+        }
+        .bulb {
+            width: 14px;
+            height: 24px;
+            border-radius: 50%;
+            position: relative;
+            top: 8px;
+            animation: glow 1.6s infinite alternate;
+        }
+        .bulb::before {
+            content: '';
+            position: absolute;
+            top: -5px;
+            left: 3px;
+            width: 8px;
+            height: 6px;
+            background: #222;
+            border-radius: 2px;
+        }
+        .bulb:nth-child(4n+1) { background: #ff3838; box-shadow: 0 0 14px #ff3838; animation-delay: 0s; }
+        .bulb:nth-child(4n+2) { background: #2ecc71; box-shadow: 0 0 14px #2ecc71; animation-delay: 0.4s; }
+        .bulb:nth-child(4n+3) { background: #f1c40f; box-shadow: 0 0 14px #f1c40f; animation-delay: 0.8s; }
+        .bulb:nth-child(4n+4) { background: #3498db; box-shadow: 0 0 14px #3498db; animation-delay: 1.2s; }
+
+        @keyframes glow {
+            0% { opacity: 0.45; transform: scale(0.92); }
+            100% { opacity: 1; transform: scale(1.08); }
+        }
+
+        /* NIEVE ANIMADA EN CSS */
+        .snow-container {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+        .flake {
+            position: absolute;
+            top: -15px;
+            background: white;
+            border-radius: 50%;
+            opacity: 0.75;
+            animation: snowfall linear infinite;
+        }
+        @keyframes snowfall {
+            0% { transform: translateY(-10px) translateX(0); }
+            50% { transform: translateY(50vh) translateX(18px); }
+            100% { transform: translateY(105vh) translateX(-18px); }
+        }
+
+        /* ARBOLITO DE NAVIDAD DIBUJADO CON CSS PURO */
+        .tree-wrapper {
+            position: relative;
+            width: 120px;
+            height: 135px;
+            margin: 0 auto 10px auto;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            z-index: 2;
+        }
+        .tree-star {
+            width: 22px;
+            height: 22px;
+            background: var(--gold);
+            clip-path: polygon(50% 0%, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+            box-shadow: 0 0 15px var(--gold);
+            margin-bottom: -5px;
+            z-index: 5;
+            animation: starPulse 2s infinite alternate;
+        }
+        @keyframes starPulse {
+            from { transform: scale(0.95); filter: brightness(1); }
+            to { transform: scale(1.15); filter: brightness(1.3); }
+        }
+        .tree-layer-1 {
+            width: 0; height: 0;
+            border-left: 28px solid transparent;
+            border-right: 28px solid transparent;
+            border-bottom: 38px solid var(--light-green);
+            z-index: 4;
+        }
+        .tree-layer-2 {
+            width: 0; height: 0;
+            border-left: 42px solid transparent;
+            border-right: 42px solid transparent;
+            border-bottom: 48px solid var(--green);
+            margin-top: -16px;
+            z-index: 3;
+        }
+        .tree-layer-3 {
+            width: 0; height: 0;
+            border-left: 56px solid transparent;
+            border-right: 56px solid transparent;
+            border-bottom: 58px solid #144918;
+            margin-top: -20px;
+            z-index: 2;
+        }
+        .tree-trunk {
+            width: 22px;
+            height: 20px;
+            background: #5d4037;
+            border-radius: 0 0 4px 4px;
+            z-index: 1;
+        }
+        .ornament {
+            position: absolute;
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            z-index: 6;
+        }
+        .orn-1 { background: #ff3838; top: 38px; left: 52px; box-shadow: 0 0 5px #ff3838; }
+        .orn-2 { background: #f1c40f; top: 62px; left: 38px; box-shadow: 0 0 5px #f1c40f; }
+        .orn-3 { background: #3498db; top: 68px; left: 70px; box-shadow: 0 0 5px #3498db; }
+        .orn-4 { background: #ff3838; top: 96px; left: 30px; box-shadow: 0 0 5px #ff3838; }
+        .orn-5 { background: #f1c40f; top: 100px; left: 60px; box-shadow: 0 0 5px #f1c40f; }
+        .orn-6 { background: #ff9ff3; top: 92px; left: 82px; box-shadow: 0 0 5px #ff9ff3; }
+
+        /* TARJETA PRINCIPAL */
         .card {
-            background: var(--bg);
+            background: var(--card-bg);
             width: 100%;
-            max-width: 500px;
-            border-radius: 16px;
-            padding: 28px;
-            box-shadow: 0 12px 30px rgba(0,0,0,0.4);
+            max-width: 480px;
+            border-radius: 20px;
+            padding: 26px;
+            box-shadow: 0 16px 40px rgba(0,0,0,0.55);
             border: 3px solid var(--gold);
+            z-index: 5;
+            position: relative;
         }
-        h1 { color: var(--red); text-align: center; margin-bottom: 8px; font-size: 1.8rem; }
-        .subtitle { text-align: center; color: var(--green); font-weight: 600; margin-bottom: 20px; font-size: 1rem; }
-        .budget-badge {
-            background: var(--green);
-            color: white;
+        h1 {
+            color: var(--red);
             text-align: center;
-            padding: 10px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: bold;
+            font-size: 1.75rem;
+            margin-bottom: 4px;
         }
-        label { display: block; font-weight: 600; margin-bottom: 6px; margin-top: 14px; font-size: 0.9rem; }
-        input, select, button {
-            width: 100%;
-            padding: 11px;
+        .subtitle {
+            text-align: center;
+            color: var(--green);
+            font-weight: 700;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+        .rules-box {
+            background: #eef7f0;
+            border-left: 5px solid var(--green);
+            color: #1e3a23;
+            padding: 14px;
             border-radius: 8px;
-            border: 1px solid #ccc;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+            white-space: pre-line;
+            line-height: 1.45;
+        }
+        .rules-title {
+            font-weight: 800;
+            color: var(--green);
+            margin-bottom: 4px;
+            display: block;
+            text-transform: uppercase;
+            font-size: 0.8rem;
+            letter-spacing: 0.5px;
+        }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            margin-top: 14px;
+            font-size: 0.9rem;
+        }
+        input, select, button, textarea {
+            width: 100%;
+            padding: 12px;
+            border-radius: 10px;
+            border: 1.5px solid #cbd5e1;
             font-size: 1rem;
+            outline: none;
+        }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--red);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 85px;
         }
         button {
-            background: var(--red);
+            background: linear-gradient(135deg, var(--red), var(--dark-red));
             color: white;
             border: none;
             font-weight: bold;
             cursor: pointer;
             margin-top: 16px;
+            box-shadow: 0 4px 12px rgba(201, 42, 42, 0.35);
+            transition: transform 0.15s;
         }
-        button.secondary { background: var(--green); margin-top: 8px; }
+        button:active { transform: scale(0.98); }
+        button.secondary {
+            background: linear-gradient(135deg, var(--light-green), var(--green));
+            box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
+            margin-top: 8px;
+        }
         .row { display: flex; gap: 8px; margin-bottom: 8px; }
         .row > * { flex: 1; }
         .tag-list {
             list-style: none;
             margin-top: 10px;
-            max-height: 160px;
+            max-height: 150px;
             overflow-y: auto;
-            border: 1px solid #eee;
+            border: 1px solid #e2e8f0;
             border-radius: 8px;
-            padding: 8px;
+            padding: 6px;
             background: #fff;
         }
         .tag-list li {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 6px 10px;
-            border-bottom: 1px solid #f0f0f0;
+            padding: 7px 10px;
+            border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
         }
+        .tag-list li:last-child { border-bottom: none; }
         .btn-remove {
-            background: #dc3545;
+            background: #e74c3c;
             color: white;
             border: none;
             width: auto;
             padding: 4px 10px;
             font-size: 0.8rem;
             margin: 0;
-            border-radius: 4px;
+            border-radius: 6px;
+            box-shadow: none;
         }
         .result-box {
             margin-top: 20px;
             padding: 20px;
-            background: #e9f5ed;
-            border: 2px dashed var(--green);
-            border-radius: 10px;
+            background: #fffdf5;
+            border: 2px dashed var(--gold);
+            border-radius: 12px;
             text-align: center;
             display: none;
         }
-        .result-name { font-size: 1.6rem; color: var(--red); font-weight: 800; margin: 10px 0; }
+        .result-name {
+            font-size: 1.7rem;
+            color: var(--red);
+            font-weight: 800;
+            margin: 10px 0;
+            text-transform: capitalize;
+        }
         .hidden { display: none; }
         .alert {
             color: #721c24;
             background-color: #f8d7da;
             border: 1px solid #f5c6cb;
             padding: 10px;
-            border-radius: 6px;
+            border-radius: 8px;
             margin-top: 12px;
-            font-size: 0.9rem;
+            font-size: 0.88rem;
             display: none;
+        }
+        .helper-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 4px;
         }
     </style>
 </head>
 <body>
 
-<div class="card">
-    <h1>Amigo Secreto</h1>
-    <p class="subtitle">Sorteo Navideño Familiar</p>
+<!-- LUCES DE NAVIDAD -->
+<div class="light-rope">
+    <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+    <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+    <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+    <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
+</div>
 
+<!-- CONTENEDOR DE NIEVE -->
+<div class="snow-container" id="snow"></div>
+
+<div class="card">
+    <!-- ARBOLITO CSS -->
+    <div class="tree-wrapper">
+        <div class="tree-star"></div>
+        <div class="tree-layer-1"></div>
+        <div class="tree-layer-2"></div>
+        <div class="tree-layer-3"></div>
+        <div class="tree-trunk"></div>
+        <div class="ornament orn-1"></div>
+        <div class="ornament orn-2"></div>
+        <div class="ornament orn-3"></div>
+        <div class="ornament orn-4"></div>
+        <div class="ornament orn-5"></div>
+        <div class="ornament orn-6"></div>
+    </div>
+
+    <h1>Amigo Secreto</h1>
+    <p class="subtitle">Sorteo Navideño</p>
+
+    <!-- VISTA PARA PARTICIPANTES -->
     <div id="participant-view" class="hidden">
-        <div id="budget-display" class="budget-badge"></div>
+        <div class="rules-box">
+            <span class="rules-title">Reglas y Condiciones del Juego:</span>
+            <div id="rules-display"></div>
+        </div>
 
         <label for="user-select">1. Selecciona tu nombre:</label>
-        <select id="user-select">
+        <select id="user-select" onchange="verificarEstadoPIN()">
             <option value="">-- ¿Quién eres? --</option>
         </select>
 
-        <label for="user-pin">2. Ingresa tu PIN asignado:</label>
-        <input type="password" id="user-pin" placeholder="Tu PIN secreto">
+        <div id="pin-section" class="hidden">
+            <label for="user-pin" id="pin-label">2. Crea tu PIN secreto (4 dígitos):</label>
+            <input type="password" id="user-pin" maxlength="8" placeholder="Escribe tu PIN personal">
+            <p class="helper-text" id="pin-helper">Crea un PIN que recuerdes. Con este PIN bloquearás tu nombre para que nadie más pueda abrirlo.</p>
+        </div>
 
         <div id="login-error" class="alert"></div>
 
-        <button onclick="verAmigoSecreto()">Descubrir mi Amigo Secreto</button>
+        <button onclick="descubrirAmigo()">Ver mi Amigo Secreto</button>
 
         <div id="secret-result" class="result-box">
-            <p>Te tocó regalarle a:</p>
+            <p style="font-weight: 600; color: var(--green);">En esta Navidad te toca regalarle a:</p>
             <div id="target-name" class="result-name"></div>
-            <p style="font-size: 0.85rem; color: #555;">Guarda el secreto.</p>
+            <p style="font-size: 0.82rem; color: #555;">Tu nombre ha quedado protegido con tu PIN en este dispositivo.</p>
         </div>
     </div>
 
+    <!-- VISTA DE ORGANIZADOR -->
     <div id="admin-view" class="hidden">
-        <label>Presupuesto en COP:</label>
-        <input type="text" id="budget-input" value="$50.000 COP">
+        <label>Reglas del juego (Presupuesto, fecha, dulces, etc.):</label>
+        <textarea id="rules-input" placeholder="Ejemplo: El regalo es de mínimo $50.000 COP. Se entrega el 24 de diciembre. Prohibido regalar medias."></textarea>
 
-        <label>Agregar Participante y PIN:</label>
+        <label>Agregar Participantes (Solo el nombre):</label>
         <div class="row">
-            <input type="text" id="p-name" placeholder="Nombre">
-            <input type="text" id="p-pin" placeholder="PIN (Ej: 1234)">
+            <input type="text" id="p-name" placeholder="Nombre (Ej: Carlos)">
         </div>
         <button class="secondary" onclick="agregarParticipante()">+ Agregar Persona</button>
 
         <ul id="p-list" class="tag-list"></ul>
 
-        <label>Condiciones (No se regalan entre sí):</label>
+        <label>Condiciones (Parejas que NO pueden salir juntas):</label>
         <div class="row">
             <select id="ex-1"></select>
             <select id="ex-2"></select>
@@ -165,10 +396,10 @@
 
         <div id="admin-error" class="alert"></div>
 
-        <button onclick="generarSorteo()">1. Generar Sorteo</button>
+        <button onclick="generarSorteo()">1. Generar Sorteo Secreto</button>
 
-        <div id="export-box" class="hidden" style="margin-top: 16px;">
-            <button class="secondary" onclick="copiarLinkGrupo()" id="btn-copy">2. Copiar Link Único para WhatsApp</button>
+        <div id="export-box" class="hidden" style="margin-top: 14px;">
+            <button class="secondary" onclick="copiarLinkGrupo()" id="btn-copy">2. Copiar Link Único para el Grupo</button>
         </div>
     </div>
 </div>
@@ -177,7 +408,23 @@
     let participantes = [];
     let exclusiones = [];
     let datosSorteoActual = null;
+    let idSorteo = "";
     let urlGenerada = "";
+
+    function crearNieve() {
+        const container = document.getElementById('snow');
+        for (let i = 0; i < 35; i++) {
+            const flake = document.createElement('div');
+            flake.className = 'flake';
+            const size = Math.random() * 5 + 3;
+            flake.style.width = size + 'px';
+            flake.style.height = size + 'px';
+            flake.style.left = (Math.random() * 100) + 'vw';
+            flake.style.animationDuration = (Math.random() * 5 + 5) + 's';
+            flake.style.animationDelay = (Math.random() * 5) + 's';
+            container.appendChild(flake);
+        }
+    }
 
     function b64EncodeUnicode(str) {
         return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, function(match, p1) {
@@ -192,9 +439,11 @@
     }
 
     window.onload = function() {
+        crearNieve();
         const params = new URLSearchParams(window.location.search);
         const s = params.get('s');
         if (s) {
+            idSorteo = s.slice(0, 16);
             datosSorteoActual = JSON.parse(b64DecodeUnicode(s));
             iniciarModoParticipante();
         } else {
@@ -204,28 +453,25 @@
 
     function agregarParticipante() {
         const nameInput = document.getElementById('p-name');
-        const pinInput = document.getElementById('p-pin');
         const nombre = nameInput.value.trim();
-        const pin = pinInput.value.trim();
 
-        if (!nombre || !pin) {
-            mostrarErrorAdmin("Pon el nombre y el PIN.");
+        if (!nombre) {
+            mostrarErrorAdmin("Escribe un nombre válido.");
             return;
         }
-        if (participantes.some(p => p.nombre.toLowerCase() === nombre.toLowerCase())) {
+        if (participantes.some(p => p.toLowerCase() === nombre.toLowerCase())) {
             mostrarErrorAdmin("Ese nombre ya está en la lista.");
             return;
         }
 
-        participantes.push({ nombre, pin });
+        participantes.push(nombre);
         nameInput.value = "";
-        pinInput.value = "";
         ocultarErrorAdmin();
         actualizarUIAdmin();
     }
 
     function eliminarParticipante(index) {
-        const eliminado = participantes[index].nombre;
+        const eliminado = participantes[index];
         participantes.splice(index, 1);
         exclusiones = exclusiones.filter(e => e.de !== eliminado && e.para !== eliminado);
         actualizarUIAdmin();
@@ -234,9 +480,13 @@
     function agregarExclusion() {
         const p1 = document.getElementById('ex-1').value;
         const p2 = document.getElementById('ex-2').value;
-        if (!p1 || !p2 || p1 === p2) return;
+        if (!p1 || !p2 || p1 === p2) {
+            mostrarErrorAdmin("Selecciona dos personas diferentes para bloquear.");
+            return;
+        }
         if (!existeExclusion(p1, p2)) exclusiones.push({ de: p1, para: p2 });
         if (!existeExclusion(p2, p1)) exclusiones.push({ de: p2, para: p1 });
+        ocultarErrorAdmin();
         actualizarUIAdmin();
     }
 
@@ -259,10 +509,10 @@
         ex1.innerHTML = "";
         ex2.innerHTML = "";
 
-        participantes.forEach((p, idx) => {
-            pList.innerHTML += `<li><span><b>${p.nombre}</b> (PIN: ${p.pin})</span> <button class="btn-remove" onclick="eliminarParticipante(${idx})">X</button></li>`;
-            ex1.innerHTML += `<option value="${p.nombre}">${p.nombre}</option>`;
-            ex2.innerHTML += `<option value="${p.nombre}">${p.nombre}</option>`;
+        participantes.forEach((nombre, idx) => {
+            pList.innerHTML += `<li><span><b>${nombre}</b></span> <button class="btn-remove" onclick="eliminarParticipante(${idx})">X</button></li>`;
+            ex1.innerHTML += `<option value="${nombre}">${nombre}</option>`;
+            ex2.innerHTML += `<option value="${nombre}">${nombre}</option>`;
         });
 
         exList.innerHTML = "";
@@ -273,23 +523,22 @@
 
     function generarSorteo() {
         if (participantes.length < 3) {
-            mostrarErrorAdmin("Mínimo 3 personas.");
+            mostrarErrorAdmin("Necesitas al menos 3 personas para jugar.");
             return;
         }
 
-        const nombres = participantes.map(p => p.nombre);
         let asignaciones = null;
 
-        for (let intento = 0; intento < 2000; intento++) {
-            let disponibles = [...nombres];
+        for (let intento = 0; intento < 2500; intento++) {
+            let disponibles = [...participantes];
             for (let i = disponibles.length - 1; i > 0; i--) {
                 const j = Math.floor(Math.random() * (i + 1));
                 [disponibles[i], disponibles[j]] = [disponibles[j], disponibles[i]];
             }
 
             let valido = true;
-            for (let i = 0; i < nombres.length; i++) {
-                if (nombres[i] === disponibles[i] || existeExclusion(nombres[i], disponibles[i])) {
+            for (let i = 0; i < participantes.length; i++) {
+                if (participantes[i] === disponibles[i] || existeExclusion(participantes[i], disponibles[i])) {
                     valido = false;
                     break;
                 }
@@ -297,26 +546,29 @@
 
             if (valido) {
                 asignaciones = {};
-                for (let i = 0; i < nombres.length; i++) asignaciones[nombres[i]] = disponibles[i];
+                for (let i = 0; i < participantes.length; i++) {
+                    asignaciones[participantes[i]] = disponibles[i];
+                }
                 break;
             }
         }
 
         if (!asignaciones) {
-            mostrarErrorAdmin("Las condiciones bloquean todas las combinaciones. Agrega más gente o quita bloqueos.");
+            mostrarErrorAdmin("Las condiciones bloquean todas las combinaciones posibles. Agrega más participantes o quita algún bloqueo.");
             return;
         }
 
         ocultarErrorAdmin();
+        const reglasTexto = document.getElementById('rules-input').value.trim() || "Sorteo navideño de Amigo Secreto.";
         const paquete = {
-            presupuesto: document.getElementById('budget-input').value.trim(),
-            usuarios: participantes.map(p => ({ nombre: p.nombre, pin: p.pin, amigo: asignaciones[p.nombre] }))
+            reglas: reglasTexto,
+            usuarios: participantes.map(nombre => ({ nombre: nombre, amigo: asignaciones[nombre] }))
         };
 
         const cifrado = encodeURIComponent(b64EncodeUnicode(JSON.stringify(paquete)));
         urlGenerada = window.location.origin + window.location.pathname + "?s=" + cifrado;
         document.getElementById('export-box').classList.remove('hidden');
-        document.getElementById('btn-copy').innerText = "2. Copiar Link Único para WhatsApp";
+        document.getElementById('btn-copy').innerText = "2. Copiar Link Único para el Grupo";
     }
 
     function copiarLinkGrupo() {
@@ -327,30 +579,101 @@
 
     function iniciarModoParticipante() {
         document.getElementById('participant-view').classList.remove('hidden');
-        document.getElementById('budget-display').innerText = "Presupuesto: " + datosSorteoActual.presupuesto;
+        document.getElementById('rules-display').innerText = datosSorteoActual.reglas;
         const select = document.getElementById('user-select');
+
+        const usuarioVinculado = localStorage.getItem("vinculo_dispositivo_" + idSorteo);
+
         datosSorteoActual.usuarios.forEach(u => {
-            select.innerHTML += `<option value="${u.nombre}">${u.nombre}</option>`;
+            if (!usuarioVinculado || usuarioVinculado === u.nombre) {
+                select.innerHTML += `<option value="${u.nombre}">${u.nombre}</option>`;
+            }
         });
+
+        if (usuarioVinculado) {
+            select.value = usuarioVinculado;
+            verificarEstadoPIN();
+        }
     }
 
-    function verAmigoSecreto() {
+    function verificarEstadoPIN() {
         const nombre = document.getElementById('user-select').value;
-        const pin = document.getElementById('user-pin').value.trim();
+        const pinSection = document.getElementById('pin-section');
+        const pinLabel = document.getElementById('pin-label');
+        const pinHelper = document.getElementById('pin-helper');
+        const resultBox = document.getElementById('secret-result');
+        const errorBox = document.getElementById('login-error');
+
+        resultBox.style.display = "none";
+        errorBox.style.display = "none";
+        document.getElementById('user-pin').value = "";
+
+        if (!nombre) {
+            pinSection.classList.add('hidden');
+            return;
+        }
+
+        pinSection.classList.remove('hidden');
+        const pinGuardado = localStorage.getItem("pin_" + idSorteo + "_" + nombre);
+
+        if (pinGuardado) {
+            pinLabel.innerText = "2. Ingresa el PIN que creaste:";
+            pinHelper.innerText = "Ya habías consultado tu amigo secreto antes. Pon tu PIN para volver a verlo.";
+        } else {
+            pinLabel.innerText = "2. Crea tu PIN secreto personal:";
+            pinHelper.innerText = "Elige un PIN para proteger tu nombre y que nadie más pueda abrirlo.";
+        }
+    }
+
+    function descubrirAmigo() {
+        const nombre = document.getElementById('user-select').value;
+        const pinIngresado = document.getElementById('user-pin').value.trim();
         const errorBox = document.getElementById('login-error');
         const resultBox = document.getElementById('secret-result');
 
-        const usuario = datosSorteoActual.usuarios.find(u => u.nombre === nombre && u.pin === pin);
-        if (!usuario) {
-            errorBox.innerText = "Nombre o PIN incorrecto.";
+        if (!nombre) {
+            errorBox.innerText = "Primero selecciona tu nombre de la lista.";
+            errorBox.style.display = "block";
+            return;
+        }
+
+        if (pinIngresado.length < 3) {
+            errorBox.innerText = "Tu PIN debe tener al menos 3 caracteres o números.";
+            errorBox.style.display = "block";
+            return;
+        }
+
+        const usuarioVinculado = localStorage.getItem("vinculo_dispositivo_" + idSorteo);
+        if (usuarioVinculado && usuarioVinculado !== nombre) {
+            errorBox.innerText = "Este celular ya fue usado para consultar el amigo secreto de " + usuarioVinculado + ".";
+            errorBox.style.display = "block";
+            return;
+        }
+
+        const claveStorage = "pin_" + idSorteo + "_" + nombre;
+        const pinGuardado = localStorage.getItem(claveStorage);
+
+        if (pinGuardado && pinGuardado !== pinIngresado) {
+            errorBox.innerText = "PIN incorrecto. Ese no fue el PIN que creaste al entrar por primera vez.";
             errorBox.style.display = "block";
             resultBox.style.display = "none";
             return;
         }
 
+        if (!pinGuardado) {
+            localStorage.setItem(claveStorage, pinIngresado);
+            localStorage.setItem("vinculo_dispositivo_" + idSorteo, nombre);
+        }
+
+        const datosUsuario = datosSorteoActual.usuarios.find(u => u.nombre === nombre);
         errorBox.style.display = "none";
-        document.getElementById('target-name').innerText = usuario.amigo;
+        document.getElementById('target-name').innerText = datosUsuario.amigo;
         resultBox.style.display = "block";
+
+        // Actualizar selector para dejar bloqueado solo su propio nombre en su celular
+        const select = document.getElementById('user-select');
+        select.innerHTML = `<option value="${nombre}">${nombre}</option>`;
+        select.value = nombre;
     }
 
     function mostrarErrorAdmin(msg) {
