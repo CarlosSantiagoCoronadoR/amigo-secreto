@@ -31,7 +31,6 @@
             color: #2c3e50;
         }
 
-        /* LUCES NAVIDEÑAS SUPERIORES EN CSS */
         .light-rope {
             position: fixed;
             top: -10px;
@@ -71,7 +70,6 @@
             100% { opacity: 1; transform: scale(1.08); }
         }
 
-        /* NIEVE ANIMADA EN CSS */
         .snow-container {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
@@ -93,7 +91,6 @@
             100% { transform: translateY(105vh) translateX(-18px); }
         }
 
-        /* ARBOLITO DE NAVIDAD DIBUJADO CON CSS PURO */
         .tree-wrapper {
             position: relative;
             width: 120px;
@@ -162,7 +159,6 @@
         .orn-5 { background: #f1c40f; top: 100px; left: 60px; box-shadow: 0 0 5px #f1c40f; }
         .orn-6 { background: #ff9ff3; top: 92px; left: 82px; box-shadow: 0 0 5px #ff9ff3; }
 
-        /* TARJETA PRINCIPAL */
         .card {
             background: var(--card-bg);
             width: 100%;
@@ -174,19 +170,8 @@
             z-index: 5;
             position: relative;
         }
-        h1 {
-            color: var(--red);
-            text-align: center;
-            font-size: 1.75rem;
-            margin-bottom: 4px;
-        }
-        .subtitle {
-            text-align: center;
-            color: var(--green);
-            font-weight: 700;
-            margin-bottom: 18px;
-            font-size: 0.95rem;
-        }
+        h1 { color: var(--red); text-align: center; font-size: 1.75rem; margin-bottom: 4px; }
+        .subtitle { text-align: center; color: var(--green); font-weight: 700; margin-bottom: 18px; font-size: 0.95rem; }
         .rules-box {
             background: #eef7f0;
             border-left: 5px solid var(--green);
@@ -207,13 +192,7 @@
             font-size: 0.8rem;
             letter-spacing: 0.5px;
         }
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 6px;
-            margin-top: 14px;
-            font-size: 0.9rem;
-        }
+        label { display: block; font-weight: 600; margin-bottom: 6px; margin-top: 14px; font-size: 0.9rem; }
         input, select, button, textarea {
             width: 100%;
             padding: 12px;
@@ -222,13 +201,8 @@
             font-size: 1rem;
             outline: none;
         }
-        input:focus, select:focus, textarea:focus {
-            border-color: var(--red);
-        }
-        textarea {
-            resize: vertical;
-            min-height: 85px;
-        }
+        input:focus, select:focus, textarea:focus { border-color: var(--red); }
+        textarea { resize: vertical; min-height: 85px; }
         button {
             background: linear-gradient(135deg, var(--red), var(--dark-red));
             color: white;
@@ -304,16 +278,20 @@
             font-size: 0.88rem;
             display: none;
         }
-        .helper-text {
-            font-size: 0.8rem;
+        .helper-text { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
+        .reset-link {
+            display: block;
+            text-align: center;
+            margin-top: 16px;
+            font-size: 0.78rem;
             color: #64748b;
-            margin-top: 4px;
+            text-decoration: underline;
+            cursor: pointer;
         }
     </style>
 </head>
 <body>
 
-<!-- LUCES DE NAVIDAD -->
 <div class="light-rope">
     <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
     <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
@@ -321,11 +299,9 @@
     <div class="bulb"></div><div class="bulb"></div><div class="bulb"></div><div class="bulb"></div>
 </div>
 
-<!-- CONTENEDOR DE NIEVE -->
 <div class="snow-container" id="snow"></div>
 
 <div class="card">
-    <!-- ARBOLITO CSS -->
     <div class="tree-wrapper">
         <div class="tree-star"></div>
         <div class="tree-layer-1"></div>
@@ -343,7 +319,6 @@
     <h1>Amigo Secreto</h1>
     <p class="subtitle">Sorteo Navideño</p>
 
-    <!-- VISTA PARA PARTICIPANTES -->
     <div id="participant-view" class="hidden">
         <div class="rules-box">
             <span class="rules-title">Reglas y Condiciones del Juego:</span>
@@ -370,12 +345,13 @@
             <div id="target-name" class="result-name"></div>
             <p style="font-size: 0.82rem; color: #555;">Tu nombre ha quedado protegido con tu PIN en este dispositivo.</p>
         </div>
+
+        <span id="reset-device-btn" class="reset-link hidden" onclick="liberarDispositivo()">¿Otra persona va a consultar en este mismo celular? Cambiar usuario</span>
     </div>
 
-    <!-- VISTA DE ORGANIZADOR -->
     <div id="admin-view" class="hidden">
-        <label>Reglas del juego (Presupuesto, fecha, dulces, etc.):</label>
-        <textarea id="rules-input" placeholder="Ejemplo: El regalo es de mínimo $50.000 COP. Se entrega el 24 de diciembre. Prohibido regalar medias."></textarea>
+        <label>Reglas del juego (Presupuesto, fecha, lugar, etc.):</label>
+        <textarea id="rules-input" placeholder="Escribe aquí las reglas del sorteo..."></textarea>
 
         <label>Agregar Participantes (Solo el nombre):</label>
         <div class="row">
@@ -438,12 +414,21 @@
         }).join(''));
     }
 
+    // Genera un identificador unico real calculando un hash de todo el contenido del link
+    function generarHashUnico(str) {
+        let hash = 5381;
+        for (let i = 0; i < str.length; i++) {
+            hash = ((hash << 5) + hash) + str.charCodeAt(i);
+        }
+        return "sorteo_" + Math.abs(hash);
+    }
+
     window.onload = function() {
         crearNieve();
         const params = new URLSearchParams(window.location.search);
         const s = params.get('s');
         if (s) {
-            idSorteo = s.slice(0, 16);
+            idSorteo = generarHashUnico(s);
             datosSorteoActual = JSON.parse(b64DecodeUnicode(s));
             iniciarModoParticipante();
         } else {
@@ -581,8 +566,17 @@
         document.getElementById('participant-view').classList.remove('hidden');
         document.getElementById('rules-display').innerText = datosSorteoActual.reglas;
         const select = document.getElementById('user-select');
+        const resetBtn = document.getElementById('reset-device-btn');
 
-        const usuarioVinculado = localStorage.getItem("vinculo_dispositivo_" + idSorteo);
+        select.innerHTML = `<option value="">-- ¿Quién eres? --</option>`;
+
+        let usuarioVinculado = localStorage.getItem("vinculo_dispositivo_" + idSorteo);
+        // Verificar que el usuario vinculado realmente exista en la lista de este sorteo
+        const existeEnEsteSorteo = datosSorteoActual.usuarios.some(u => u.nombre === usuarioVinculado);
+        if (!existeEnEsteSorteo) {
+            usuarioVinculado = null;
+            localStorage.removeItem("vinculo_dispositivo_" + idSorteo);
+        }
 
         datosSorteoActual.usuarios.forEach(u => {
             if (!usuarioVinculado || usuarioVinculado === u.nombre) {
@@ -592,8 +586,18 @@
 
         if (usuarioVinculado) {
             select.value = usuarioVinculado;
+            resetBtn.classList.remove('hidden');
             verificarEstadoPIN();
+        } else {
+            resetBtn.classList.add('hidden');
         }
+    }
+
+    function liberarDispositivo() {
+        localStorage.removeItem("vinculo_dispositivo_" + idSorteo);
+        document.getElementById('secret-result').style.display = "none";
+        document.getElementById('pin-section').classList.add('hidden');
+        iniciarModoParticipante();
     }
 
     function verificarEstadoPIN() {
@@ -643,13 +647,6 @@
             return;
         }
 
-        const usuarioVinculado = localStorage.getItem("vinculo_dispositivo_" + idSorteo);
-        if (usuarioVinculado && usuarioVinculado !== nombre) {
-            errorBox.innerText = "Este celular ya fue usado para consultar el amigo secreto de " + usuarioVinculado + ".";
-            errorBox.style.display = "block";
-            return;
-        }
-
         const claveStorage = "pin_" + idSorteo + "_" + nombre;
         const pinGuardado = localStorage.getItem(claveStorage);
 
@@ -670,10 +667,10 @@
         document.getElementById('target-name').innerText = datosUsuario.amigo;
         resultBox.style.display = "block";
 
-        // Actualizar selector para dejar bloqueado solo su propio nombre en su celular
         const select = document.getElementById('user-select');
         select.innerHTML = `<option value="${nombre}">${nombre}</option>`;
         select.value = nombre;
+        document.getElementById('reset-device-btn').classList.remove('hidden');
     }
 
     function mostrarErrorAdmin(msg) {
