@@ -14,10 +14,14 @@
             --light-green: #2e7d32;
             --gold: #f5b041;
             --snow: #ffffff;
-            --card-bg: rgba(255, 252, 247, 0.96);
+            --card-bg: rgba(255, 252, 247, 0.97);
         }
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
-        
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
         body {
             background: linear-gradient(180deg, var(--night-top) 0%, var(--night-bottom) 85%, #e8f1f5 100%);
             min-height: 100vh;
@@ -30,7 +34,6 @@
             overflow-x: hidden;
             color: #2c3e50;
         }
-
         .light-rope {
             position: fixed;
             top: -10px;
@@ -72,7 +75,10 @@
 
         .snow-container {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
             z-index: 1;
             overflow: hidden;
@@ -116,14 +122,16 @@
             to { transform: scale(1.15); filter: brightness(1.3); }
         }
         .tree-layer-1 {
-            width: 0; height: 0;
+            width: 0;
+            height: 0;
             border-left: 28px solid transparent;
             border-right: 28px solid transparent;
             border-bottom: 38px solid var(--light-green);
             z-index: 4;
         }
         .tree-layer-2 {
-            width: 0; height: 0;
+            width: 0;
+            height: 0;
             border-left: 42px solid transparent;
             border-right: 42px solid transparent;
             border-bottom: 48px solid var(--green);
@@ -131,7 +139,8 @@
             z-index: 3;
         }
         .tree-layer-3 {
-            width: 0; height: 0;
+            width: 0;
+            height: 0;
             border-left: 56px solid transparent;
             border-right: 56px solid transparent;
             border-bottom: 58px solid #144918;
@@ -170,8 +179,19 @@
             z-index: 5;
             position: relative;
         }
-        h1 { color: var(--red); text-align: center; font-size: 1.75rem; margin-bottom: 4px; }
-        .subtitle { text-align: center; color: var(--green); font-weight: 700; margin-bottom: 18px; font-size: 0.95rem; }
+        h1 {
+            color: var(--red);
+            text-align: center;
+            font-size: 1.75rem;
+            margin-bottom: 4px;
+        }
+        .subtitle {
+            text-align: center;
+            color: var(--green);
+            font-weight: 700;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
         .rules-box {
             background: #eef7f0;
             border-left: 5px solid var(--green);
@@ -186,13 +206,19 @@
         .rules-title {
             font-weight: 800;
             color: var(--green);
-            margin-bottom: 4px;
+            margin-bottom: 6px;
             display: block;
             text-transform: uppercase;
             font-size: 0.8rem;
             letter-spacing: 0.5px;
         }
-        label { display: block; font-weight: 600; margin-bottom: 6px; margin-top: 14px; font-size: 0.9rem; }
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 6px;
+            margin-top: 14px;
+            font-size: 0.9rem;
+        }
         input, select, button, textarea {
             width: 100%;
             padding: 12px;
@@ -200,9 +226,16 @@
             border: 1.5px solid #cbd5e1;
             font-size: 1rem;
             outline: none;
+            background-color: #fff;
+            color: #1e293b;
         }
-        input:focus, select:focus, textarea:focus { border-color: var(--red); }
-        textarea { resize: vertical; min-height: 85px; }
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--red);
+        }
+        textarea {
+            resize: vertical;
+            min-height: 95px;
+        }
         button {
             background: linear-gradient(135deg, var(--red), var(--dark-red));
             color: white;
@@ -213,18 +246,26 @@
             box-shadow: 0 4px 12px rgba(201, 42, 42, 0.35);
             transition: transform 0.15s;
         }
-        button:active { transform: scale(0.98); }
+        button:active {
+            transform: scale(0.98);
+        }
         button.secondary {
             background: linear-gradient(135deg, var(--light-green), var(--green));
             box-shadow: 0 4px 12px rgba(27, 94, 32, 0.3);
             margin-top: 8px;
         }
-        .row { display: flex; gap: 8px; margin-bottom: 8px; }
-        .row > * { flex: 1; }
+        .row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 8px;
+        }
+        .row > * {
+            flex: 1;
+        }
         .tag-list {
             list-style: none;
             margin-top: 10px;
-            max-height: 150px;
+            max-height: 160px;
             overflow-y: auto;
             border: 1px solid #e2e8f0;
             border-radius: 8px;
@@ -239,7 +280,9 @@
             border-bottom: 1px solid #f1f5f9;
             font-size: 0.9rem;
         }
-        .tag-list li:last-child { border-bottom: none; }
+        .tag-list li:last-child {
+            border-bottom: none;
+        }
         .btn-remove {
             background: #e74c3c;
             color: white;
@@ -261,13 +304,14 @@
             display: none;
         }
         .result-name {
-            font-size: 1.7rem;
+            font-size: 1.75rem;
             color: var(--red);
             font-weight: 800;
             margin: 10px 0;
-            text-transform: capitalize;
         }
-        .hidden { display: none; }
+        .hidden {
+            display: none;
+        }
         .alert {
             color: #721c24;
             background-color: #f8d7da;
@@ -278,7 +322,22 @@
             font-size: 0.88rem;
             display: none;
         }
-        .helper-text { font-size: 0.8rem; color: #64748b; margin-top: 4px; }
+        .success-banner {
+            color: #155724;
+            background-color: #d4edda;
+            border: 1px solid #c3e6cb;
+            padding: 10px;
+            border-radius: 8px;
+            margin-top: 12px;
+            font-size: 0.88rem;
+            text-align: center;
+            font-weight: 600;
+        }
+        .helper-text {
+            font-size: 0.8rem;
+            color: #64748b;
+            margin-top: 4px;
+        }
         .reset-link {
             display: block;
             text-align: center;
@@ -319,6 +378,7 @@
     <h1>Amigo Secreto</h1>
     <p class="subtitle">Sorteo Navideño</p>
 
+    <!-- VISTA PARA PARTICIPANTES -->
     <div id="participant-view" class="hidden">
         <div class="rules-box">
             <span class="rules-title">Reglas y Condiciones del Juego:</span>
@@ -331,9 +391,9 @@
         </select>
 
         <div id="pin-section" class="hidden">
-            <label for="user-pin" id="pin-label">2. Crea tu PIN secreto (4 dígitos):</label>
-            <input type="password" id="user-pin" maxlength="8" placeholder="Escribe tu PIN personal">
-            <p class="helper-text" id="pin-helper">Crea un PIN que recuerdes. Con este PIN bloquearás tu nombre para que nadie más pueda abrirlo.</p>
+            <label for="user-pin" id="pin-label">2. Crea tu PIN secreto personal:</label>
+            <input type="password" id="user-pin" maxlength="10" placeholder="Escribe tu PIN personal">
+            <p class="helper-text" id="pin-helper">Elige un PIN que recuerdes para proteger tu nombre y que nadie más pueda abrirlo.</p>
         </div>
 
         <div id="login-error" class="alert"></div>
@@ -343,19 +403,20 @@
         <div id="secret-result" class="result-box">
             <p style="font-weight: 600; color: var(--green);">En esta Navidad te toca regalarle a:</p>
             <div id="target-name" class="result-name"></div>
-            <p style="font-size: 0.82rem; color: #555;">Tu nombre ha quedado protegido con tu PIN en este dispositivo.</p>
+            <p style="font-size: 0.82rem; color: #555;">Guarda el secreto. Tu nombre ha quedado protegido con tu PIN.</p>
         </div>
 
-        <span id="reset-device-btn" class="reset-link hidden" onclick="liberarDispositivo()">¿Otra persona va a consultar en este mismo celular? Cambiar usuario</span>
+        <span id="reset-device-btn" class="reset-link hidden" onclick="liberarDispositivo()">¿Otra persona va a consultar desde este mismo celular? Toca aquí</span>
     </div>
 
+    <!-- VISTA DE ORGANIZADOR -->
     <div id="admin-view" class="hidden">
         <label>Reglas del juego (Presupuesto, fecha, lugar, etc.):</label>
-        <textarea id="rules-input" placeholder="Escribe aquí las reglas del sorteo..."></textarea>
+        <textarea id="rules-input" placeholder="Escribe aquí el saludo, presupuesto en COP, fecha y lugar de entrega..."></textarea>
 
-        <label>Agregar Participantes (Solo el nombre):</label>
+        <label>Agregar Participantes (Uno por uno):</label>
         <div class="row">
-            <input type="text" id="p-name" placeholder="Nombre (Ej: Carlos)">
+            <input type="text" id="p-name" placeholder="Nombre (Ej: Carlos)" onkeydown="if(event.key==='Enter') agregarParticipante()">
         </div>
         <button class="secondary" onclick="agregarParticipante()">+ Agregar Persona</button>
 
@@ -375,7 +436,8 @@
         <button onclick="generarSorteo()">1. Generar Sorteo Secreto</button>
 
         <div id="export-box" class="hidden" style="margin-top: 14px;">
-            <button class="secondary" onclick="copiarLinkGrupo()" id="btn-copy">2. Copiar Link Único para el Grupo</button>
+            <div id="sorteo-info" class="success-banner"></div>
+            <button class="secondary" onclick="copiarLinkGrupo()" id="btn-copy">2. Copiar Link Único para WhatsApp</button>
         </div>
     </div>
 </div>
@@ -414,7 +476,12 @@
         }).join(''));
     }
 
-    // Genera un identificador unico real calculando un hash de todo el contenido del link
+    function randomCripto(max) {
+        const array = new Uint32Array(1);
+        window.crypto.getRandomValues(array);
+        return array[0] % max;
+    }
+
     function generarHashUnico(str) {
         let hash = 5381;
         for (let i = 0; i < str.length; i++) {
@@ -428,9 +495,14 @@
         const params = new URLSearchParams(window.location.search);
         const s = params.get('s');
         if (s) {
-            idSorteo = generarHashUnico(s);
-            datosSorteoActual = JSON.parse(b64DecodeUnicode(s));
-            iniciarModoParticipante();
+            try {
+                datosSorteoActual = JSON.parse(b64DecodeUnicode(s));
+                idSorteo = datosSorteoActual.semilla ? ("sorteo_" + datosSorteoActual.semilla) : generarHashUnico(s);
+                iniciarModoParticipante();
+            } catch (e) {
+                document.getElementById('admin-view').classList.remove('hidden');
+                mostrarErrorAdmin("El enlace está incompleto o dañado. Genera uno nuevo aquí.");
+            }
         } else {
             document.getElementById('admin-view').classList.remove('hidden');
         }
@@ -452,6 +524,7 @@
         participantes.push(nombre);
         nameInput.value = "";
         ocultarErrorAdmin();
+        document.getElementById('export-box').classList.add('hidden');
         actualizarUIAdmin();
     }
 
@@ -459,6 +532,7 @@
         const eliminado = participantes[index];
         participantes.splice(index, 1);
         exclusiones = exclusiones.filter(e => e.de !== eliminado && e.para !== eliminado);
+        document.getElementById('export-box').classList.add('hidden');
         actualizarUIAdmin();
     }
 
@@ -472,6 +546,7 @@
         if (!existeExclusion(p1, p2)) exclusiones.push({ de: p1, para: p2 });
         if (!existeExclusion(p2, p1)) exclusiones.push({ de: p2, para: p1 });
         ocultarErrorAdmin();
+        document.getElementById('export-box').classList.add('hidden');
         actualizarUIAdmin();
     }
 
@@ -481,6 +556,7 @@
 
     function eliminarExclusion(index) {
         exclusiones.splice(index, 1);
+        document.getElementById('export-box').classList.add('hidden');
         actualizarUIAdmin();
     }
 
@@ -495,7 +571,7 @@
         ex2.innerHTML = "";
 
         participantes.forEach((nombre, idx) => {
-            pList.innerHTML += `<li><span><b>${nombre}</b></span> <button class="btn-remove" onclick="eliminarParticipante(${idx})">X</button></li>`;
+            pList.innerHTML += `<li><span><b>${idx + 1}. ${nombre}</b></span> <button class="btn-remove" onclick="eliminarParticipante(${idx})">X</button></li>`;
             ex1.innerHTML += `<option value="${nombre}">${nombre}</option>`;
             ex2.innerHTML += `<option value="${nombre}">${nombre}</option>`;
         });
@@ -508,22 +584,25 @@
 
     function generarSorteo() {
         if (participantes.length < 3) {
-            mostrarErrorAdmin("Necesitas al menos 3 personas para jugar.");
+            mostrarErrorAdmin("Necesitas al menos 3 personas en la lista para jugar.");
             return;
         }
 
         let asignaciones = null;
 
-        for (let intento = 0; intento < 2500; intento++) {
-            let disponibles = [...participantes];
-            for (let i = disponibles.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [disponibles[i], disponibles[j]] = [disponibles[j], disponibles[i]];
+        // Primero intentamos un Ciclo Hamiltoniano puro (1 sola cadena circular donde nadie se devuelve regalo)
+        for (let intento = 0; intento < 5000; intento++) {
+            let cadena = [...participantes];
+            for (let i = cadena.length - 1; i > 0; i--) {
+                const j = randomCripto(i + 1);
+                [cadena[i], cadena[j]] = [cadena[j], cadena[i]];
             }
 
             let valido = true;
-            for (let i = 0; i < participantes.length; i++) {
-                if (participantes[i] === disponibles[i] || existeExclusion(participantes[i], disponibles[i])) {
+            for (let i = 0; i < cadena.length; i++) {
+                const dador = cadena[i];
+                const receptor = cadena[(i + 1) % cadena.length];
+                if (existeExclusion(dador, receptor)) {
                     valido = false;
                     break;
                 }
@@ -531,34 +610,72 @@
 
             if (valido) {
                 asignaciones = {};
-                for (let i = 0; i < participantes.length; i++) {
-                    asignaciones[participantes[i]] = disponibles[i];
+                for (let i = 0; i < cadena.length; i++) {
+                    asignaciones[cadena[i]] = cadena[(i + 1) % cadena.length];
                 }
                 break;
             }
         }
 
+        // Respaldo de permutacion general si los bloqueos impiden un unico circulo
         if (!asignaciones) {
-            mostrarErrorAdmin("Las condiciones bloquean todas las combinaciones posibles. Agrega más participantes o quita algún bloqueo.");
+            for (let intento = 0; intento < 5000; intento++) {
+                let disponibles = [...participantes];
+                for (let i = disponibles.length - 1; i > 0; i--) {
+                    const j = randomCripto(i + 1);
+                    [disponibles[i], disponibles[j]] = [disponibles[j], disponibles[i]];
+                }
+
+                let valido = true;
+                for (let i = 0; i < participantes.length; i++) {
+                    if (participantes[i] === disponibles[i] || existeExclusion(participantes[i], disponibles[i])) {
+                        valido = false;
+                        break;
+                    }
+                }
+
+                if (valido) {
+                    asignaciones = {};
+                    for (let i = 0; i < participantes.length; i++) {
+                        asignaciones[participantes[i]] = disponibles[i];
+                    }
+                    break;
+                }
+            }
+        }
+
+        if (!asignaciones) {
+            mostrarErrorAdmin("Las condiciones bloquean todas las combinaciones posibles. Quita algún bloqueo o agrega más personas.");
             return;
         }
 
         ocultarErrorAdmin();
+        const codigoUnico = (1000 + randomCripto(9000)).toString();
+        const semillaCompleta = Date.now().toString(36) + "_" + codigoUnico;
         const reglasTexto = document.getElementById('rules-input').value.trim() || "Sorteo navideño de Amigo Secreto.";
+
+        const listaUsuarios = participantes.map(nombre => ({
+            nombre: nombre,
+            amigo: asignaciones[nombre]
+        }));
+
         const paquete = {
+            semilla: semillaCompleta,
             reglas: reglasTexto,
-            usuarios: participantes.map(nombre => ({ nombre: nombre, amigo: asignaciones[nombre] }))
+            usuarios: listaUsuarios
         };
 
         const cifrado = encodeURIComponent(b64EncodeUnicode(JSON.stringify(paquete)));
         urlGenerada = window.location.origin + window.location.pathname + "?s=" + cifrado;
+
         document.getElementById('export-box').classList.remove('hidden');
-        document.getElementById('btn-copy').innerText = "2. Copiar Link Único para el Grupo";
+        document.getElementById('sorteo-info').innerText = "Sorteo #" + codigoUnico + " generado con " + participantes.length + " participantes.";
+        document.getElementById('btn-copy').innerText = "2. Copiar Link del Sorteo #" + codigoUnico;
     }
 
     function copiarLinkGrupo() {
         navigator.clipboard.writeText(urlGenerada).then(() => {
-            document.getElementById('btn-copy').innerText = "Link copiado. Pégalo en WhatsApp";
+            document.getElementById('btn-copy').innerText = "Link copiado al portapapeles. Pégalo en WhatsApp";
         });
     }
 
@@ -570,17 +687,20 @@
 
         select.innerHTML = `<option value="">-- ¿Quién eres? --</option>`;
 
-        let usuarioVinculado = localStorage.getItem("vinculo_dispositivo_" + idSorteo);
-        // Verificar que el usuario vinculado realmente exista en la lista de este sorteo
+        let usuarioVinculado = localStorage.getItem("vinculo_" + idSorteo);
         const existeEnEsteSorteo = datosSorteoActual.usuarios.some(u => u.nombre === usuarioVinculado);
+
         if (!existeEnEsteSorteo) {
             usuarioVinculado = null;
-            localStorage.removeItem("vinculo_dispositivo_" + idSorteo);
+            localStorage.removeItem("vinculo_" + idSorteo);
         }
 
         datosSorteoActual.usuarios.forEach(u => {
             if (!usuarioVinculado || usuarioVinculado === u.nombre) {
-                select.innerHTML += `<option value="${u.nombre}">${u.nombre}</option>`;
+                const opt = document.createElement('option');
+                opt.value = u.nombre;
+                opt.textContent = u.nombre;
+                select.appendChild(opt);
             }
         });
 
@@ -594,7 +714,7 @@
     }
 
     function liberarDispositivo() {
-        localStorage.removeItem("vinculo_dispositivo_" + idSorteo);
+        localStorage.removeItem("vinculo_" + idSorteo);
         document.getElementById('secret-result').style.display = "none";
         document.getElementById('pin-section').classList.add('hidden');
         iniciarModoParticipante();
@@ -622,10 +742,10 @@
 
         if (pinGuardado) {
             pinLabel.innerText = "2. Ingresa el PIN que creaste:";
-            pinHelper.innerText = "Ya habías consultado tu amigo secreto antes. Pon tu PIN para volver a verlo.";
+            pinHelper.innerText = "Ya habías consultado tu amigo secreto en este teléfono. Pon tu PIN para verlo.";
         } else {
             pinLabel.innerText = "2. Crea tu PIN secreto personal:";
-            pinHelper.innerText = "Elige un PIN para proteger tu nombre y que nadie más pueda abrirlo.";
+            pinHelper.innerText = "Elige un PIN (mínimo 3 dígitos) para bloquear tu nombre en este teléfono.";
         }
     }
 
@@ -642,7 +762,7 @@
         }
 
         if (pinIngresado.length < 3) {
-            errorBox.innerText = "Tu PIN debe tener al menos 3 caracteres o números.";
+            errorBox.innerText = "Tu PIN debe tener al menos 3 números o letras.";
             errorBox.style.display = "block";
             return;
         }
@@ -659,7 +779,7 @@
 
         if (!pinGuardado) {
             localStorage.setItem(claveStorage, pinIngresado);
-            localStorage.setItem("vinculo_dispositivo_" + idSorteo, nombre);
+            localStorage.setItem("vinculo_" + idSorteo, nombre);
         }
 
         const datosUsuario = datosSorteoActual.usuarios.find(u => u.nombre === nombre);
@@ -668,8 +788,13 @@
         resultBox.style.display = "block";
 
         const select = document.getElementById('user-select');
-        select.innerHTML = `<option value="${nombre}">${nombre}</option>`;
+        select.innerHTML = "";
+        const opt = document.createElement('option');
+        opt.value = nombre;
+        opt.textContent = nombre;
+        select.appendChild(opt);
         select.value = nombre;
+
         document.getElementById('reset-device-btn').classList.remove('hidden');
     }
 
